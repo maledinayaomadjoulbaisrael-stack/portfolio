@@ -22,8 +22,11 @@ console.log("Clé Groq détectée.");
 
 const PORT = process.env.PORT || 3000;
 
-const ORIGINE_AUTORISEE =
-    process.env.ALLOWED_ORIGIN || "*";
+// Origines autorisées
+const ORIGINES_AUTORISEES = [
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
+];
 
 // ==========================================
 // SERVEUR
@@ -35,10 +38,22 @@ const server = http.createServer((req, res) => {
     // CORS
     // ======================================
 
-    res.setHeader(
-        "Access-Control-Allow-Origin",
-        ORIGINE_AUTORISEE
-    );
+    const origine = req.headers.origin;
+
+    if (
+        origine &&
+        ORIGINES_AUTORISEES.includes(origine)
+    ) {
+        res.setHeader(
+            "Access-Control-Allow-Origin",
+            origine
+        );
+
+        res.setHeader(
+            "Vary",
+            "Origin"
+        );
+    }
 
     res.setHeader(
         "Access-Control-Allow-Methods",
@@ -55,8 +70,29 @@ const server = http.createServer((req, res) => {
     // ======================================
 
     if (req.method === "OPTIONS") {
+
+        if (
+            origine &&
+            !ORIGINES_AUTORISEES.includes(origine)
+        ) {
+
+            res.writeHead(403, {
+                "Content-Type":
+                    "application/json; charset=utf-8"
+            });
+
+            res.end(
+                JSON.stringify({
+                    erreur: "Origine non autorisée."
+                })
+            );
+
+            return;
+        }
+
         res.writeHead(204);
         res.end();
+
         return;
     }
 
@@ -64,7 +100,10 @@ const server = http.createServer((req, res) => {
     // ROUTE /chat
     // ======================================
 
-    if (req.method === "POST" && req.url === "/chat") {
+    if (
+        req.method === "POST" &&
+        req.url === "/chat"
+    ) {
 
         console.log("REQUÊTE /chat REÇUE");
 
@@ -78,9 +117,11 @@ const server = http.createServer((req, res) => {
 
             try {
 
-                const donnees = JSON.parse(body);
+                const donnees =
+                    JSON.parse(body);
 
-                const messageUtilisateur = donnees.message;
+                const messageUtilisateur =
+                    donnees.message;
 
                 console.log(
                     "Question reçue :",
@@ -101,9 +142,12 @@ const server = http.createServer((req, res) => {
                             "application/json; charset=utf-8"
                     });
 
-                    res.end(JSON.stringify({
-                        reponse: "Message invalide."
-                    }));
+                    res.end(
+                        JSON.stringify({
+                            reponse:
+                                "Message invalide."
+                        })
+                    );
 
                     return;
                 }
@@ -139,7 +183,8 @@ const server = http.createServer((req, res) => {
                         {
                             role: "user",
 
-                            content: messageUtilisateur
+                            content:
+                                messageUtilisateur
                         }
 
                     ]
@@ -156,12 +201,14 @@ const server = http.createServer((req, res) => {
 
                 const options = {
 
-                    hostname: "api.groq.com",
+                    hostname:
+                        "api.groq.com",
 
                     path:
                         "/openai/v1/chat/completions",
 
-                    method: "POST",
+                    method:
+                        "POST",
 
                     headers: {
 
@@ -215,11 +262,15 @@ const server = http.createServer((req, res) => {
                                     // ERREUR GROQ
                                     // ==========================
 
-                                    if (donneesReponse.error) {
+                                    if (
+                                        donneesReponse.error
+                                    ) {
 
                                         console.error(
                                             "Erreur Groq :",
-                                            donneesReponse.error.message
+                                            donneesReponse
+                                                .error
+                                                .message
                                         );
 
                                         res.writeHead(500, {
@@ -250,7 +301,9 @@ const server = http.createServer((req, res) => {
                                     if (
                                         donneesReponse.choices &&
                                         donneesReponse.choices[0] &&
-                                        donneesReponse.choices[0].message
+                                        donneesReponse
+                                            .choices[0]
+                                            .message
                                     ) {
 
                                         texte =
@@ -261,7 +314,8 @@ const server = http.createServer((req, res) => {
 
                                     }
 
-                                    texte = texte.trim();
+                                    texte =
+                                        texte.trim();
 
                                     if (!texte) {
 
@@ -289,7 +343,8 @@ const server = http.createServer((req, res) => {
                                     res.end(
                                         JSON.stringify({
 
-                                            reponse: texte
+                                            reponse:
+                                                texte
 
                                         })
                                     );
@@ -357,7 +412,9 @@ const server = http.createServer((req, res) => {
                 // ENVOYER LA REQUÊTE
                 // ==================================
 
-                requeteIA.write(donneesIA);
+                requeteIA.write(
+                    donneesIA
+                );
 
                 requeteIA.end();
 
