@@ -1,4 +1,3 @@
-
 /* =========================================================
    WHITETIGER.DEV
    Dark Premium + Cyan
@@ -173,7 +172,9 @@ section {
 
 .nav-links a {
     position: relative;
+
     color: var(--text-secondary);
+
     font-size: 0.95rem;
 
     transition: color var(--transition);
@@ -212,6 +213,7 @@ section {
     border: none;
 
     color: var(--text-primary);
+
     font-size: 1.7rem;
 
     cursor: pointer;
@@ -238,6 +240,7 @@ section {
     content: "";
 
     position: absolute;
+
     width: 500px;
     height: 500px;
 
@@ -377,13 +380,15 @@ section {
 
     color: #061014;
 
-    box-shadow: 0 0 25px rgba(0, 229, 255, 0.15);
+    box-shadow:
+        0 0 25px rgba(0, 229, 255, 0.15);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
 
-    box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
+    box-shadow:
+        0 10px 30px rgba(0, 229, 255, 0.2);
 }
 
 .btn-secondary {
@@ -537,7 +542,9 @@ section {
 
 .project-image {
     height: 230px;
+
     position: relative;
+
     overflow: hidden;
 
     display: flex;
@@ -586,7 +593,8 @@ section {
 
     border-radius: 10px;
 
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.4);
 
     overflow: hidden;
 }
@@ -682,7 +690,8 @@ section {
 
     line-height: 1.8;
 
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 .code-preview span {
@@ -717,7 +726,8 @@ section {
 
     border-radius: 10px;
 
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 .todo-preview-box > strong {
@@ -775,7 +785,8 @@ section {
 
     border-radius: 10px;
 
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.5);
 
     font-family: Consolas, monospace;
 
@@ -793,8 +804,6 @@ section {
 .terminal-preview span {
     color: var(--accent);
 }
-
-
 
 
 /* Contenu */
@@ -880,7 +889,9 @@ section {
 
 .form-status {
     min-height: 20px;
+
     font-size: 0.9rem;
+
     font-weight: 600;
 }
 
@@ -956,7 +967,8 @@ section {
 .form-group textarea:focus {
     border-color: var(--accent);
 
-    box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.08);
+    box-shadow:
+        0 0 0 3px rgba(0, 229, 255, 0.08);
 }
 
 .form-group input::placeholder,
@@ -1186,12 +1198,14 @@ section {
     }
 }
 
-/* ================================
-   RETOUR EN HAUT
-   ================================ */
+
+/* =========================================================
+   15. RETOUR EN HAUT
+   ========================================================= */
 
 #back-to-top {
     position: fixed;
+
     bottom: 95px;
     right: 25px;
 
@@ -1199,12 +1213,15 @@ section {
     height: 44px;
 
     border: 1px solid var(--border);
+
     border-radius: 50%;
 
     background: var(--bg-card);
+
     color: var(--accent);
 
     font-size: 20px;
+
     cursor: pointer;
 
     display: flex;
@@ -1213,16 +1230,22 @@ section {
 
     opacity: 0;
     visibility: hidden;
+
     transform: translateY(10px);
 
-    transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+    transition:
+        opacity var(--transition),
+        transform var(--transition),
+        visibility var(--transition);
 
     z-index: 999;
 }
 
 #back-to-top.visible {
     opacity: 1;
+
     visibility: visible;
+
     transform: translateY(0);
 }
 
@@ -1230,68 +1253,85 @@ section {
     border-color: var(--accent);
 }
 
-/* ================================
-   BOUTON ASSISTANT IA
-   ================================ */
+
+/* =========================================================
+   16. BOUTON ASSISTANT IA
+   ========================================================= */
 
 #ai-button {
     position: fixed;
-    bottom: 25px;
+
     right: 25px;
+    bottom: 25px;
 
     width: 60px;
     height: 60px;
 
     border: none;
+
     border-radius: 50%;
 
-    background-color: #111;
+    background: #111;
+
     color: white;
 
     font-size: 26px;
+
     cursor: pointer;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.25);
 
-    z-index: 1000;
+    z-index: 1001;
 
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 #ai-button:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
 
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.35);
 }
 
-/* ================================
-   FENÊTRE ASSISTANT IA
-   ================================ */
+
+/* =========================================================
+   17. FENÊTRE ASSISTANT IA
+   ========================================================= */
 
 #ai-chat {
     position: fixed;
-    bottom: 100px;
+
     right: 25px;
+    bottom: 100px;
 
-    width: 350px;
-    height: 480px;
+    width: min(350px, calc(100vw - 30px));
 
-    background-color: white;
+    height: min(480px, calc(100vh - 130px));
+
+    min-height: 350px;
+
+    background: white;
+
     border-radius: 15px;
 
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.25);
 
     display: flex;
     flex-direction: column;
 
     overflow: hidden;
 
-    z-index: 999;
+    z-index: 1100;
 }
+
 
 /* Fenêtre cachée */
 
@@ -1299,59 +1339,166 @@ section {
     display: none !important;
 }
 
-/* En-tête */
+
+/* =========================================================
+   18. EN-TÊTE ASSISTANT IA
+   ========================================================= */
 
 .ai-header {
-    background-color: #111;
+    flex: 0 0 auto;
+
+    min-height: 65px;
+
+    background: #111;
+
     color: white;
 
-    padding: 15px;
+    padding: 12px 15px;
 
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.ai-header > div {
+    min-width: 0;
 }
 
 .ai-header strong {
     display: block;
+
     font-size: 17px;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
 }
 
 .ai-header span {
+    display: block;
+
+    margin-top: 3px;
+
     font-size: 12px;
+
+    line-height: 1.3;
+
     opacity: 0.7;
 }
 
-/* Bouton fermer */
+
+/* =========================================================
+   19. BOUTON FERMER X
+   ========================================================= */
 
 #ai-close {
-    background: none;
-    border: none;
+    flex: 0 0 auto;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 8px;
 
     color: white;
 
-    font-size: 25px;
+    font-size: 24px;
+
+    line-height: 1;
 
     cursor: pointer;
+
+    padding: 0;
+
+    position: relative;
+
+    z-index: 5;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
-/* Zone des messages */
+#ai-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+
+    border-color:
+        rgba(255, 255, 255, 0.3);
+
+    transform: scale(1.05);
+}
+
+#ai-close:active {
+    transform: scale(0.95);
+}
+
+
+/* =========================================================
+   20. ZONE DES MESSAGES
+   ========================================================= */
 
 .ai-messages {
-    flex: 1;
+    flex: 1 1 auto;
+
+    min-height: 0;
 
     padding: 15px;
 
     overflow-y: auto;
 
-    background-color: #f5f5f5;
+    overflow-x: hidden;
+
+    background: #f5f5f5;
+
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Message de l'assistant */
+
+/* Scrollbar */
+
+.ai-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ai-messages::-webkit-scrollbar-track {
+    background: #eeeeee;
+}
+
+.ai-messages::-webkit-scrollbar-thumb {
+    background: #bbbbbb;
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   21. MESSAGE ASSISTANT
+   ========================================================= */
 
 .ai-message {
-    background-color: white;
+    max-width: 88%;
+
+    background: white;
+
     color: #111;
+
     padding: 10px 12px;
 
     border-radius: 10px;
@@ -1361,69 +1508,301 @@ section {
     font-size: 14px;
 
     line-height: 1.5;
+
+    overflow-wrap: anywhere;
+
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Zone de saisie */
+
+/* =========================================================
+   22. MESSAGE UTILISATEUR
+   ========================================================= */
+
+.user-message {
+    max-width: 82%;
+
+    background: #111;
+
+    color: white;
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    margin-bottom: 10px;
+
+    margin-left: auto;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   23. ZONE DE SAISIE
+   ========================================================= */
 
 .ai-input-area {
+    flex: 0 0 auto;
+
     display: flex;
+
+    align-items: center;
+
+    gap: 8px;
 
     padding: 10px;
 
     border-top: 1px solid #ddd;
 
-    background-color: white;
+    background: white;
+
+    position: relative;
+
+    z-index: 3;
 }
 
-#ai-input {
-    flex: 1;
 
-    padding: 10px;
+/* Champ de saisie */
+
+#ai-input {
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    height: 42px;
+
+    padding: 9px 11px;
 
     border: 1px solid #ccc;
 
     border-radius: 8px;
 
     outline: none;
+
+    color: #111;
+
+    background: white;
 }
 
-#ai-send {
-    margin-left: 8px;
+#ai-input:focus {
+    border-color: var(--accent-dark);
 
-    padding: 10px 14px;
+    box-shadow:
+        0 0 0 2px rgba(0, 169, 189, 0.12);
+}
+
+
+/* Bouton envoyer */
+
+#ai-send {
+    flex: 0 0 auto;
+
+    height: 42px;
+
+    padding: 0 14px;
 
     border: none;
 
     border-radius: 8px;
 
-    background-color: #111;
+    background: #111;
 
     color: white;
 
     cursor: pointer;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 #ai-send:hover {
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
-/* ================================
-   MESSAGES DE L'UTILISATEUR
-   ================================ */
+#ai-send:active {
+    transform: scale(0.96);
+}
 
-.user-message {
-    background-color: #111;
-    color: white;
+#ai-send:disabled {
+    opacity: 0.5;
 
-    padding: 10px 12px;
+    cursor: not-allowed;
+}
 
-    border-radius: 10px;
 
-    margin-bottom: 10px;
-    margin-left: auto;
+/* =========================================================
+   24. RESPONSIVE ASSISTANT — MOBILE
+   ========================================================= */
 
-    max-width: 80%;
+@media (max-width: 700px) {
 
-    font-size: 14px;
-    line-height: 1.5;
+    #ai-button {
+        right: 18px;
+
+        bottom: 18px;
+
+        width: 56px;
+        height: 56px;
+
+        font-size: 24px;
+    }
+
+
+    #ai-chat {
+        right: 15px;
+
+        bottom: 88px;
+
+        width: calc(100vw - 30px);
+
+        height: min(
+            520px,
+            calc(100vh - 105px)
+        );
+
+        min-height: 320px;
+
+        border-radius: 14px;
+    }
+
+
+    .ai-header {
+        min-height: 62px;
+
+        padding: 10px 12px;
+    }
+
+
+    #ai-close {
+        width: 38px;
+        height: 38px;
+
+        font-size: 22px;
+    }
+
+
+    .ai-messages {
+        padding: 12px;
+    }
+
+
+    .ai-input-area {
+        padding: 9px;
+    }
+
+
+    #ai-input {
+        height: 42px;
+    }
+
+
+    #ai-send {
+        height: 42px;
+
+        padding: 0 13px;
+    }
+}
+
+
+/* =========================================================
+   25. RESPONSIVE ASSISTANT — PETITS TÉLÉPHONES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    #ai-button {
+        right: 14px;
+
+        bottom: 14px;
+
+        width: 52px;
+        height: 52px;
+
+        font-size: 22px;
+    }
+
+
+    #ai-chat {
+        left: 10px;
+
+        right: 10px;
+
+        bottom: 76px;
+
+        width: auto;
+
+        height: calc(100vh - 90px);
+
+        min-height: 300px;
+
+        border-radius: 12px;
+    }
+
+
+    .ai-header {
+        min-height: 58px;
+
+        padding: 9px 10px;
+    }
+
+
+    .ai-header strong {
+        font-size: 15px;
+    }
+
+
+    .ai-header span {
+        font-size: 11px;
+    }
+
+
+    #ai-close {
+        width: 36px;
+        height: 36px;
+
+        font-size: 21px;
+    }
+
+
+    .ai-messages {
+        padding: 10px;
+    }
+
+
+    .ai-message,
+    .user-message {
+        font-size: 13px;
+    }
+
+
+    .ai-input-area {
+        padding: 8px;
+
+        gap: 6px;
+    }
+
+
+    #ai-input {
+        height: 40px;
+
+        padding: 8px 9px;
+
+        font-size: 14px;
+    }
+
+
+    #ai-send {
+        height: 40px;
+
+        padding: 0 11px;
+
+        font-size: 14px;
+    }
 }

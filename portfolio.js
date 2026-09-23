@@ -1,798 +1,856 @@
- /* =========================================================
-    WHITETIGER.DEV
-    JavaScript principal — TEST RENDER
-    ========================================================= */
+/* =========================================================
+   WHITETIGER.DEV
+   JavaScript principal
+   ========================================================= */
 
 
- /* =========================================================
-    1. HEADER AU SCROLL
-    ========================================================= */
+/* =========================================================
+   1. HEADER AU SCROLL
+   ========================================================= */
 
- const header = document.querySelector(".header");
+const header = document.querySelector(".header");
 
- if (header) {
+if (header) {
 
-     const gererHeader = () => {
+    const gererHeader = () => {
 
-         if (window.scrollY > 50) {
-             header.classList.add("scrolled");
-         } else {
-             header.classList.remove("scrolled");
-         }
+        if (window.scrollY > 50) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
+        }
 
-     };
+    };
 
-     window.addEventListener("scroll", gererHeader);
+    window.addEventListener("scroll", gererHeader);
 
-     gererHeader();
- }
+    gererHeader();
+}
 
 
- /* =========================================================
-    2. BOUTON RETOUR EN HAUT
-    ========================================================= */
+/* =========================================================
+   2. BOUTON RETOUR EN HAUT
+   ========================================================= */
 
- const backToTop =
-     document.getElementById("back-to-top");
+const backToTop =
+    document.getElementById("back-to-top");
 
- if (backToTop) {
+if (backToTop) {
 
-     const gererBackToTop = () => {
+    const gererBackToTop = () => {
 
-         if (window.scrollY > 500) {
-             backToTop.classList.add("visible");
-         } else {
-             backToTop.classList.remove("visible");
-         }
+        if (window.scrollY > 500) {
+            backToTop.classList.add("visible");
+        } else {
+            backToTop.classList.remove("visible");
+        }
 
-     };
+    };
 
-     window.addEventListener(
-         "scroll",
-         gererBackToTop
-     );
+    window.addEventListener(
+        "scroll",
+        gererBackToTop
+    );
 
-     gererBackToTop();
+    gererBackToTop();
 
-     backToTop.addEventListener(
-         "click",
-         () => {
+    backToTop.addEventListener(
+        "click",
+        () => {
 
-             window.scrollTo({
-                 top: 0,
-                 behavior: "smooth"
-             });
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
 
-         }
-     );
- }
+        }
+    );
+}
 
 
- /* =========================================================
-    3. MENU MOBILE
-    ========================================================= */
+/* =========================================================
+   3. MENU MOBILE
+   ========================================================= */
 
- const menuToggle =
-     document.querySelector(".menu-toggle");
+const menuToggle =
+    document.querySelector(".menu-toggle");
 
- const navLinks =
-     document.querySelector(".nav-links");
+const navLinks =
+    document.querySelector(".nav-links");
 
- if (menuToggle && navLinks) {
+if (menuToggle && navLinks) {
 
-     menuToggle.addEventListener(
-         "click",
-         () => {
+    menuToggle.addEventListener(
+        "click",
+        () => {
 
-             navLinks.classList.toggle("active");
+            navLinks.classList.toggle("active");
 
-         }
-     );
- }
+        }
+    );
+}
 
 
- /* =========================================================
-    4. FERMER LE MENU APRÈS CLIC
-    ========================================================= */
+/* =========================================================
+   4. FERMER LE MENU APRÈS CLIC
+   ========================================================= */
 
- const navigationLinks =
-     document.querySelectorAll(".nav-links a");
+const navigationLinks =
+    document.querySelectorAll(".nav-links a");
 
- navigationLinks.forEach((link) => {
+navigationLinks.forEach((link) => {
 
-     link.addEventListener(
-         "click",
-         () => {
+    link.addEventListener(
+        "click",
+        () => {
 
-             if (navLinks) {
-                 navLinks.classList.remove("active");
-             }
+            if (navLinks) {
+                navLinks.classList.remove("active");
+            }
 
-         }
-     );
+        }
+    );
 
- });
+});
 
 
- /* =========================================================
-    5. FORMULAIRE DE CONTACT
-    ========================================================= */
+/* =========================================================
+   5. FORMULAIRE DE CONTACT
+   ========================================================= */
 
- const contactForm =
-     document.getElementById("contact-form");
+const contactForm =
+    document.getElementById("contact-form");
 
- const formStatus =
-     document.getElementById("form-status");
+const formStatus =
+    document.getElementById("form-status");
 
- if (contactForm && formStatus) {
+if (contactForm && formStatus) {
 
-     contactForm.addEventListener(
-         "submit",
-         async (event) => {
+    contactForm.addEventListener(
+        "submit",
+        async (event) => {
 
-             event.preventDefault();
+            event.preventDefault();
 
-             const boutonEnvoyer =
-                 contactForm.querySelector(
-                     "button[type='submit']"
-                 );
+            const boutonEnvoyer =
+                contactForm.querySelector(
+                    "button[type='submit']"
+                );
 
-             if (!boutonEnvoyer) {
+            if (!boutonEnvoyer) {
 
-                 console.error(
-                     "Bouton d'envoi introuvable."
-                 );
+                console.error(
+                    "Bouton d'envoi introuvable."
+                );
 
-                 return;
-             }
+                return;
+            }
 
+            boutonEnvoyer.disabled = true;
 
-             boutonEnvoyer.disabled = true;
+            boutonEnvoyer.textContent =
+                "Envoi...";
 
-             boutonEnvoyer.textContent =
-                 "Envoi...";
+            formStatus.textContent =
+                "Envoi en cours...";
 
-             formStatus.textContent =
-                 "Envoi en cours...";
+            formStatus.className =
+                "form-status";
 
-             formStatus.className =
-                 "form-status";
+            try {
 
+                const donnees =
+                    new FormData(contactForm);
 
-             try {
+                const response =
+                    await fetch(
+                        contactForm.action,
+                        {
+                            method: "POST",
+                            body: donnees,
+                            headers: {
+                                Accept:
+                                    "application/json"
+                            }
+                        }
+                    );
 
-                 const donnees =
-                     new FormData(contactForm);
+                if (response.ok) {
 
-                 const response =
-                     await fetch(
-                         contactForm.action,
-                         {
-                             method: "POST",
-                             body: donnees,
-                             headers: {
-                                 Accept:
-                                     "application/json"
-                             }
-                         }
-                     );
+                    formStatus.textContent =
+                        "Message envoyé avec succès ! Je vous répondrai rapidement.";
 
+                    formStatus.className =
+                        "form-status form-status-success";
 
-                 if (response.ok) {
+                    contactForm.reset();
 
-                     formStatus.textContent =
-                         "Message envoyé avec succès ! Je vous répondrai rapidement.";
+                } else {
 
-                     formStatus.className =
-                         "form-status form-status-success";
+                    let messageErreur =
+                        "Le message n'a pas pu être envoyé. Réessayez.";
 
-                     contactForm.reset();
+                    try {
 
-                 } else {
+                        const data =
+                            await response.json();
 
-                     let messageErreur =
-                         "Le message n'a pas pu être envoyé. Réessayez.";
+                        if (
+                            data.errors &&
+                            Array.isArray(data.errors) &&
+                            data.errors.length > 0
+                        ) {
 
-                     try {
+                            messageErreur =
+                                data.errors
+                                    .map(
+                                        (erreur) =>
+                                            erreur.message
+                                    )
+                                    .join(", ");
 
-                         const data =
-                             await response.json();
+                        }
 
-                         if (
-                             data.errors &&
-                             Array.isArray(data.errors) &&
-                             data.errors.length > 0
-                         ) {
+                    } catch (erreurJSON) {
 
-                             messageErreur =
-                                 data.errors
-                                     .map(
-                                         (erreur) =>
-                                             erreur.message
-                                     )
-                                     .join(", ");
+                        console.warn(
+                            "Impossible de lire la réponse Formspree.",
+                            erreurJSON
+                        );
 
-                         }
+                    }
 
-                     } catch (erreurJSON) {
+                    formStatus.textContent =
+                        messageErreur;
 
-                         console.warn(
-                             "Impossible de lire la réponse Formspree.",
-                             erreurJSON
-                         );
+                    formStatus.className =
+                        "form-status form-status-error";
 
-                     }
+                }
 
-                     formStatus.textContent =
-                         messageErreur;
+            } catch (error) {
 
-                     formStatus.className =
-                         "form-status form-status-error";
+                console.error(
+                    "Erreur formulaire de contact :",
+                    error
+                );
 
-                 }
+                formStatus.textContent =
+                    "Erreur de connexion. Réessayez ou écrivez-moi directement par e-mail.";
 
-             } catch (error) {
+                formStatus.className =
+                    "form-status form-status-error";
 
-                 console.error(
-                     "Erreur formulaire de contact :",
-                     error
-                 );
+            } finally {
 
-                 formStatus.textContent =
-                     "Erreur de connexion. Réessayez ou écrivez-moi directement par e-mail.";
+                boutonEnvoyer.disabled = false;
 
-                 formStatus.className =
-                     "form-status form-status-error";
+                boutonEnvoyer.textContent =
+                    "Envoyer le message";
 
-             } finally {
+            }
 
-                 boutonEnvoyer.disabled = false;
+        }
+    );
+}
 
-                 boutonEnvoyer.textContent =
-                     "Envoyer le message";
 
-             }
+/* =========================================================
+   6. ASSISTANT IA
+   ========================================================= */
 
-         }
-     );
- }
+const aiButton =
+    document.getElementById("ai-button");
 
+const aiChat =
+    document.getElementById("ai-chat");
 
- /* =========================================================
-    6. ASSISTANT IA
-    ========================================================= */
+const aiClose =
+    document.getElementById("ai-close");
 
- const aiButton =
-     document.getElementById("ai-button");
+const aiInput =
+    document.getElementById("ai-input");
 
- const aiChat =
-     document.getElementById("ai-chat");
+const aiSend =
+    document.getElementById("ai-send");
 
- const aiClose =
-     document.getElementById("ai-close");
+const aiMessages =
+    document.getElementById("ai-messages");
 
- const aiInput =
-     document.getElementById("ai-input");
 
- const aiSend =
-     document.getElementById("ai-send");
+/* =========================================================
+   7. SERVEUR IA
+   ========================================================= */
 
- const aiMessages =
-     document.getElementById("ai-messages");
+const AI_SERVER_URL =
+    "https://whitetiger-api.onrender.com/chat";
 
 
- /* =========================================================
-    7. SERVEUR IA — TEST RENDER
-    =========================================================
+/* =========================================================
+   8. ÉTAT DE L'ASSISTANT
+   ========================================================= */
 
-    IMPORTANT :
+let aiOuvert = false;
 
-    Pour ce test, même sur localhost,
-    toutes les requêtes vont directement vers Render.
 
-    URL :
-    https://whitetiger-api.onrender.com/chat
+/* =========================================================
+   9. OUVRIR L'ASSISTANT
+   ========================================================= */
 
-    La clé GROQ_API_KEY reste sur Render.
-    ========================================================= */
+function ouvrirAssistant() {
 
- const AI_SERVER_URL =
-     "https://whitetiger-api.onrender.com/chat";
+    if (!aiChat) {
+        return;
+    }
 
+    aiChat.classList.remove(
+        "ai-chat-hidden"
+    );
 
- /* =========================================================
-    8. OUVRIR L'ASSISTANT
-    ========================================================= */
+    aiOuvert = true;
 
- if (aiButton && aiChat) {
+    /*
+     * Empêche le bouton IA d'être
+     * utilisé comme élément de sortie
+     * lorsque la fenêtre est ouverte.
+     */
 
-     aiButton.addEventListener(
-         "click",
-         () => {
+    if (aiButton) {
+        aiButton.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+    }
 
-             aiChat.classList.remove(
-                 "ai-chat-hidden"
-             );
+    /*
+     * Focus après affichage.
+     * Le délai évite les problèmes
+     * sur certains téléphones.
+     */
 
-             if (aiInput) {
+    if (aiInput) {
 
-                 setTimeout(
-                     () => {
-                         aiInput.focus();
-                     },
-                     100
-                 );
+        setTimeout(
+            () => {
 
-             }
+                if (aiOuvert) {
+                    aiInput.focus();
+                }
 
-         }
-     );
+            },
+            150
+        );
+    }
+}
 
- }
 
+/* =========================================================
+   10. FERMER L'ASSISTANT
+   ========================================================= */
 
- /* =========================================================
-    9. FERMER L'ASSISTANT
-    ========================================================= */
+function fermerAssistant() {
 
- if (aiClose && aiChat) {
+    if (!aiChat) {
+        return;
+    }
 
-     aiClose.addEventListener(
-         "click",
-         () => {
+    /*
+     * Ferme complètement la fenêtre.
+     */
 
-             aiChat.classList.add(
-                 "ai-chat-hidden"
-             );
+    aiChat.classList.add(
+        "ai-chat-hidden"
+    );
 
-         }
-     );
+    aiOuvert = false;
 
- }
+    /*
+     * Réinitialise l'état ARIA.
+     */
 
+    if (aiButton) {
+        aiButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+    }
 
- /* =========================================================
-    10. CONVERTIR LE MARKDOWN SIMPLE
-    ========================================================= */
+    /*
+     * Retire le focus du champ.
+     * Important sur mobile pour éviter
+     * que le clavier reste affiché.
+     */
 
- function convertirMarkdownSimple(texte) {
+    if (
+        document.activeElement === aiInput &&
+        aiInput
+    ) {
 
-     if (!texte) {
-         return "";
-     }
+        aiInput.blur();
 
+    }
+}
 
-     let contenu =
-         String(texte);
 
+/* =========================================================
+   11. BOUTON OUVRIR
+   ========================================================= */
 
-     /* Sécurisation HTML */
+if (aiButton && aiChat) {
 
-     contenu = contenu
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
+    aiButton.addEventListener(
+        "click",
+        (event) => {
 
+            event.preventDefault();
 
-     /* Gras */
+            event.stopPropagation();
 
-     contenu = contenu.replace(
-         /\*\*(.*?)\*\*/g,
-         "<strong>$1</strong>"
-     );
+            if (aiOuvert) {
+                fermerAssistant();
+            } else {
+                ouvrirAssistant();
+            }
 
+        }
+    );
 
-     /* Italique */
+}
 
-     contenu = contenu.replace(
-         /(^|[^*])\*([^*\n]+)\*(?!\*)/g,
-         "$1<em>$2</em>"
-     );
 
+/* =========================================================
+   12. BOUTON X
+   ========================================================= */
 
-     /* Listes */
+if (aiClose && aiChat) {
 
-     contenu = contenu.replace(
-         /^\s*[-•]\s+(.+)$/gm,
-         "<li>$1</li>"
-     );
+    aiClose.addEventListener(
+        "click",
+        (event) => {
 
+            /*
+             * Empêche le clic de remonter
+             * vers d'autres éléments.
+             */
 
-     /* Regrouper les listes */
+            event.preventDefault();
 
-     contenu = contenu.replace(
-         /((?:<li>.*?<\/li>\s*)+)/gs,
-         "<ul>$1</ul>"
-     );
+            event.stopPropagation();
 
+            fermerAssistant();
 
-     /* Retours à la ligne */
+        }
+    );
 
-     contenu = contenu.replace(
-         /\n/g,
-         "<br>"
-     );
+}
 
 
-     return contenu;
- }
+/* =========================================================
+   13. CONVERTIR LE MARKDOWN SIMPLE
+   ========================================================= */
 
+function convertirMarkdownSimple(texte) {
 
- /* =========================================================
-    11. AJOUTER UN MESSAGE
-    ========================================================= */
+    if (!texte) {
+        return "";
+    }
 
- function ajouterMessage(
-     message,
-     classe
- ) {
+    let contenu =
+        String(texte);
 
-     if (!aiMessages) {
-         return null;
-     }
+    /* Sécurisation HTML */
 
+    contenu = contenu
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
-     const nouveauMessage =
-         document.createElement("div");
+    /* Gras */
 
+    contenu = contenu.replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+    );
 
-     nouveauMessage.classList.add(
-         classe
-     );
+    /* Italique */
 
+    contenu = contenu.replace(
+        /(^|[^*])\*([^*\n]+)\*(?!\*)/g,
+        "$1<em>$2</em>"
+    );
 
-     if (classe === "user-message") {
+    /* Listes */
 
-         nouveauMessage.textContent =
-             message;
+    contenu = contenu.replace(
+        /^\s*[-•]\s+(.+)$/gm,
+        "<li>$1</li>"
+    );
 
-     } else {
+    /* Regrouper les listes */
 
-         nouveauMessage.innerHTML =
-             convertirMarkdownSimple(
-                 message
-             );
+    contenu = contenu.replace(
+        /((?:<li>.*?<\/li>\s*)+)/gs,
+        "<ul>$1</ul>"
+    );
 
-     }
+    /* Retours à la ligne */
 
+    contenu = contenu.replace(
+        /\n/g,
+        "<br>"
+    );
 
-     aiMessages.appendChild(
-         nouveauMessage
-     );
+    return contenu;
+}
 
 
-     aiMessages.scrollTop =
-         aiMessages.scrollHeight;
+/* =========================================================
+   14. AJOUTER UN MESSAGE
+   ========================================================= */
 
+function ajouterMessage(
+    message,
+    classe
+) {
 
-     return nouveauMessage;
- }
+    if (!aiMessages) {
+        return null;
+    }
 
+    const nouveauMessage =
+        document.createElement("div");
 
- /* =========================================================
-    12. SUPPRIMER LE CHARGEMENT
-    ========================================================= */
+    nouveauMessage.classList.add(
+        classe
+    );
 
- function supprimerMessageChargement(
-     messageElement
- ) {
+    if (classe === "user-message") {
 
-     if (
-         messageElement &&
-         messageElement.parentNode
-     ) {
+        nouveauMessage.textContent =
+            message;
 
-         messageElement.remove();
+    } else {
 
-     }
+        nouveauMessage.innerHTML =
+            convertirMarkdownSimple(
+                message
+            );
 
- }
+    }
 
+    aiMessages.appendChild(
+        nouveauMessage
+    );
 
- /* =========================================================
-    13. ENVOYER LE MESSAGE À L'IA
-    ========================================================= */
+    /*
+     * Faire défiler uniquement
+     * la zone de conversation.
+     */
 
- async function envoyerMessageIA() {
+    requestAnimationFrame(
+        () => {
 
-     if (
-         !aiInput ||
-         !aiSend ||
-         !aiMessages
-     ) {
-         return;
-     }
+            aiMessages.scrollTop =
+                aiMessages.scrollHeight;
 
+        }
+    );
 
-     const messageUtilisateur =
-         aiInput.value.trim();
+    return nouveauMessage;
+}
 
 
-     if (messageUtilisateur === "") {
-         return;
-     }
+/* =========================================================
+   15. SUPPRIMER LE CHARGEMENT
+   ========================================================= */
 
+function supprimerMessageChargement(
+    messageElement
+) {
 
-     /* Afficher le message utilisateur */
+    if (
+        messageElement &&
+        messageElement.parentNode
+    ) {
 
-     ajouterMessage(
-         messageUtilisateur,
-         "user-message"
-     );
+        messageElement.remove();
 
+    }
 
-     /* Vider le champ */
+}
 
-     aiInput.value = "";
 
+/* =========================================================
+   16. ENVOYER LE MESSAGE À L'IA
+   ========================================================= */
 
-     /* Désactiver le bouton */
+async function envoyerMessageIA() {
 
-     aiSend.disabled = true;
+    if (
+        !aiInput ||
+        !aiSend ||
+        !aiMessages
+    ) {
+        return;
+    }
 
+    const messageUtilisateur =
+        aiInput.value.trim();
 
-     /* Message de chargement */
+    if (messageUtilisateur === "") {
+        return;
+    }
 
-     const messageChargement =
-         ajouterMessage(
-             "Je réfléchis...",
-             "ai-message"
-         );
+    /* Afficher le message utilisateur */
 
+    ajouterMessage(
+        messageUtilisateur,
+        "user-message"
+    );
 
-     try {
+    /* Vider le champ */
 
-         console.log(
-             "Connexion au serveur Render..."
-         );
+    aiInput.value = "";
 
-         console.log(
-             "URL utilisée :",
-             AI_SERVER_URL
-         );
+    /* Désactiver le bouton */
 
+    aiSend.disabled = true;
 
-         /* =================================================
-            REQUÊTE VERS RENDER
-            ================================================= */
+    /* Message de chargement */
 
-         const response =
-             await fetch(
-                 AI_SERVER_URL,
-                 {
-                     method: "POST",
+    const messageChargement =
+        ajouterMessage(
+            "Je réfléchis...",
+            "ai-message"
+        );
 
-                     headers: {
-                         "Content-Type":
-                             "application/json"
-                     },
+    try {
 
-                     body: JSON.stringify({
-                         message:
-                             messageUtilisateur
-                     })
-                 }
-             );
+        console.log(
+            "Connexion au serveur Render..."
+        );
 
+        console.log(
+            "URL utilisée :",
+            AI_SERVER_URL
+        );
 
-         console.log(
-             "Réponse Render :",
-             response.status
-         );
+        const response =
+            await fetch(
+                AI_SERVER_URL,
+                {
+                    method: "POST",
 
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-         /* Vérifier HTTP */
+                    body: JSON.stringify({
+                        message:
+                            messageUtilisateur
+                    })
+                }
+            );
 
-         if (!response.ok) {
+        console.log(
+            "Réponse Render :",
+            response.status
+        );
 
-             let detailsErreur =
-                 `Erreur serveur (${response.status})`;
+        if (!response.ok) {
 
+            let detailsErreur =
+                `Erreur serveur (${response.status})`;
 
-             try {
+            try {
 
-                 const erreurData =
-                     await response.json();
+                const erreurData =
+                    await response.json();
 
+                if (erreurData.message) {
 
-                 if (erreurData.message) {
+                    detailsErreur =
+                        erreurData.message;
 
-                     detailsErreur =
-                         erreurData.message;
+                } else if (
+                    erreurData.error
+                ) {
 
-                 } else if (
-                     erreurData.error
-                 ) {
+                    detailsErreur =
+                        erreurData.error;
 
-                     detailsErreur =
-                         erreurData.error;
+                }
 
-                 }
+            } catch (erreurJSON) {
 
-             } catch (erreurJSON) {
+                console.warn(
+                    "Réponse d'erreur non JSON.",
+                    erreurJSON
+                );
 
-                 console.warn(
-                     "Réponse d'erreur non JSON.",
-                     erreurJSON
-                 );
+            }
 
-             }
+            throw new Error(
+                detailsErreur
+            );
+        }
 
+        const data =
+            await response.json();
 
-             throw new Error(
-                 detailsErreur
-             );
+        console.log(
+            "Réponse reçue depuis Render :",
+            data
+        );
 
-         }
+        supprimerMessageChargement(
+            messageChargement
+        );
 
+        const reponseIA =
+            data.reponse ||
+            data.response ||
+            data.message ||
+            data.answer;
 
-         /* =================================================
-            RÉPONSE JSON
-            ================================================= */
+        if (!reponseIA) {
 
-         const data =
-             await response.json();
+            ajouterMessage(
+                "Le serveur a répondu, mais aucune réponse IA n'a été reçue.",
+                "ai-message"
+            );
 
+        } else {
 
-         console.log(
-             "Réponse reçue depuis Render :",
-             data
-         );
+            ajouterMessage(
+                reponseIA,
+                "ai-message"
+            );
 
+        }
 
-         /* Supprimer le chargement */
+    } catch (error) {
 
-         supprimerMessageChargement(
-             messageChargement
-         );
+        console.error(
+            "Erreur assistant IA :",
+            error
+        );
 
+        supprimerMessageChargement(
+            messageChargement
+        );
 
-         /* Récupérer la réponse */
+        ajouterMessage(
+            "Désolé, je n'arrive pas à contacter le serveur IA. Vérifiez la connexion au serveur.",
+            "ai-message"
+        );
 
-         const reponseIA =
-             data.reponse ||
-             data.response ||
-             data.message ||
-             data.answer;
+    } finally {
 
+        aiSend.disabled = false;
 
-         if (!reponseIA) {
+        if (
+            aiInput &&
+            aiOuvert
+        ) {
 
-             ajouterMessage(
-                 "Le serveur a répondu, mais aucune réponse IA n'a été reçue.",
-                 "ai-message"
-             );
+            aiInput.focus();
 
-         } else {
+        }
 
-             ajouterMessage(
-                 reponseIA,
-                 "ai-message"
-             );
+    }
 
-         }
+}
 
-     } catch (error) {
 
-         console.error(
-             "Erreur assistant IA :",
-             error
-         );
+/* =========================================================
+   17. BOUTON ENVOYER
+   ========================================================= */
 
+if (aiSend) {
 
-         /* Supprimer le chargement */
+    aiSend.addEventListener(
+        "click",
+        (event) => {
 
-         supprimerMessageChargement(
-             messageChargement
-         );
+            event.preventDefault();
 
+            envoyerMessageIA();
 
-         /* Message d'erreur */
+        }
+    );
 
-         ajouterMessage(
-             "Désolé, je n'arrive pas à contacter le serveur IA. Vérifiez la console du navigateur pour plus de détails.",
-             "ai-message"
-         );
+}
 
-     } finally {
 
-         aiSend.disabled = false;
+/* =========================================================
+   18. TOUCHE ENTRÉE
+   ========================================================= */
 
-         if (aiInput) {
-             aiInput.focus();
-         }
+if (aiInput) {
 
-     }
+    aiInput.addEventListener(
+        "keydown",
+        (event) => {
 
- }
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
 
+                event.preventDefault();
 
- /* =========================================================
-    14. BOUTON ENVOYER
-    ========================================================= */
+                envoyerMessageIA();
 
- if (aiSend) {
+            }
 
-     aiSend.addEventListener(
-         "click",
-         envoyerMessageIA
-     );
+        }
+    );
 
- }
+}
 
 
- /* =========================================================
-    15. TOUCHE ENTRÉE
-    ========================================================= */
+/* =========================================================
+   19. TOUCHE ÉCHAP
+   ========================================================= */
 
- if (aiInput) {
+document.addEventListener(
+    "keydown",
+    (event) => {
 
-     aiInput.addEventListener(
-         "keydown",
-         (event) => {
+        if (
+            event.key === "Escape" &&
+            aiOuvert
+        ) {
 
-             if (
-                 event.key === "Enter" &&
-                 !event.shiftKey
-             ) {
+            fermerAssistant();
 
-                 event.preventDefault();
+        }
 
-                 envoyerMessageIA();
+    }
+);
 
-             }
 
-         }
-     );
+/* =========================================================
+   20. MESSAGE DE BIENVENUE
+   ========================================================= */
 
- }
+if (
+    aiMessages &&
+    aiMessages.children.length === 0
+) {
+s
+    ajouterMessage(
+        "Bonjour 👋 Je suis l'assistant IA de Whitetiger.dev. Que souhaitez-vous savoir sur le portfolio, les projets ou le parcours de MALEDINA ?",
+        "ai-message"
+    );
 
+}
 
- /* =========================================================
-    16. TOUCHE ÉCHAP
-    ========================================================= */
 
- document.addEventListener(
-     "keydown",
-     (event) => {
-
-         if (
-             event.key === "Escape" &&
-             aiChat &&
-             !aiChat.classList.contains(
-                 "ai-chat-hidden"
-             )
-         ) {
-
-             aiChat.classList.add(
-                 "ai-chat-hidden"
-             );
-
-         }
-
-     }
- );
-
-
- /* =========================================================
-    17. MESSAGE DE BIENVENUE
-    ========================================================= */
-
- if (
-     aiMessages &&
-     aiMessages.children.length === 0
- ) {
-
-     ajouterMessage(
-         "Bonjour 👋 Je suis l'assistant IA de Whitetiger.dev. Que souhaitez-vous savoir sur le portfolio, les projets ou le parcours de MALEDINA ?",
-         "ai-message"
-     );
-
- }
-
-
- /* =========================================================
-    FIN DU SCRIPT — TEST RENDER
-    ========================================================= */
+/* =========================================================
+   FIN DU SCRIPT
+   ========================================================= */
