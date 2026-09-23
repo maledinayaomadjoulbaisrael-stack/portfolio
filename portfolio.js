@@ -1,484 +1,798 @@
-/* =========================================================
-   WHITETIGER.DEV
-   JavaScript
-   ========================================================= */
+ /* =========================================================
+    WHITETIGER.DEV
+    JavaScript principal — TEST RENDER
+    ========================================================= */
 
 
-/* =========================
-   1. HEADER AU SCROLL
-   ========================= */
+ /* =========================================================
+    1. HEADER AU SCROLL
+    ========================================================= */
 
-const header = document.querySelector(".header");
+ const header = document.querySelector(".header");
 
-if (header) {
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
-        }
-    });
-}
+ if (header) {
 
+     const gererHeader = () => {
 
-/* =========================
-   1bis. BOUTON RETOUR EN HAUT
-   ========================= */
+         if (window.scrollY > 50) {
+             header.classList.add("scrolled");
+         } else {
+             header.classList.remove("scrolled");
+         }
 
-const backToTop = document.getElementById("back-to-top");
+     };
 
-if (backToTop) {
+     window.addEventListener("scroll", gererHeader);
 
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 500) {
-            backToTop.classList.add("visible");
-        } else {
-            backToTop.classList.remove("visible");
-        }
-    });
+     gererHeader();
+ }
 
-    backToTop.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    });
 
-}
+ /* =========================================================
+    2. BOUTON RETOUR EN HAUT
+    ========================================================= */
 
+ const backToTop =
+     document.getElementById("back-to-top");
 
-/* =========================
-   2. MENU MOBILE
-   ========================= */
+ if (backToTop) {
 
-const menuToggle = document.querySelector(".menu-toggle");
-const navLinks = document.querySelector(".nav-links");
+     const gererBackToTop = () => {
 
-if (menuToggle && navLinks) {
+         if (window.scrollY > 500) {
+             backToTop.classList.add("visible");
+         } else {
+             backToTop.classList.remove("visible");
+         }
 
-    menuToggle.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-    });
+     };
 
-}
+     window.addEventListener(
+         "scroll",
+         gererBackToTop
+     );
 
+     gererBackToTop();
 
-/* =========================
-   3. FERMER LE MENU
-   ========================= */
+     backToTop.addEventListener(
+         "click",
+         () => {
 
-const navigationLinks = document.querySelectorAll(".nav-links a");
+             window.scrollTo({
+                 top: 0,
+                 behavior: "smooth"
+             });
 
-navigationLinks.forEach((link) => {
+         }
+     );
+ }
 
-    link.addEventListener("click", () => {
 
-        if (navLinks) {
-            navLinks.classList.remove("active");
-        }
+ /* =========================================================
+    3. MENU MOBILE
+    ========================================================= */
 
-    });
+ const menuToggle =
+     document.querySelector(".menu-toggle");
 
-});
+ const navLinks =
+     document.querySelector(".nav-links");
 
+ if (menuToggle && navLinks) {
 
-/* =========================
-   3bis. FORMULAIRE DE CONTACT
-   ========================= */
+     menuToggle.addEventListener(
+         "click",
+         () => {
 
-const contactForm = document.getElementById("contact-form");
-const formStatus = document.getElementById("form-status");
+             navLinks.classList.toggle("active");
 
-if (contactForm && formStatus) {
+         }
+     );
+ }
 
-    contactForm.addEventListener("submit", async (event) => {
 
-        event.preventDefault();
+ /* =========================================================
+    4. FERMER LE MENU APRÈS CLIC
+    ========================================================= */
 
-        const boutonEnvoyer =
-            contactForm.querySelector("button[type='submit']");
+ const navigationLinks =
+     document.querySelectorAll(".nav-links a");
 
-        if (!boutonEnvoyer) {
-            console.error("Bouton d'envoi introuvable.");
-            return;
-        }
+ navigationLinks.forEach((link) => {
 
-        /* État pendant l'envoi */
+     link.addEventListener(
+         "click",
+         () => {
 
-        boutonEnvoyer.disabled = true;
-        boutonEnvoyer.textContent = "Envoi...";
+             if (navLinks) {
+                 navLinks.classList.remove("active");
+             }
 
-        formStatus.textContent = "Envoi en cours...";
-        formStatus.className = "form-status";
+         }
+     );
 
-        try {
+ });
 
-            /* Récupérer les données du formulaire */
 
-            const donnees = new FormData(contactForm);
+ /* =========================================================
+    5. FORMULAIRE DE CONTACT
+    ========================================================= */
 
-            /* Envoyer vers Formspree */
+ const contactForm =
+     document.getElementById("contact-form");
 
-            const reponse = await fetch(
-                contactForm.action,
-                {
-                    method: "POST",
-                    body: donnees,
-                    headers: {
-                        "Accept": "application/json"
-                    }
-                }
-            );
+ const formStatus =
+     document.getElementById("form-status");
 
+ if (contactForm && formStatus) {
 
-            /* =========================
-               ENVOI RÉUSSI
-               ========================= */
+     contactForm.addEventListener(
+         "submit",
+         async (event) => {
 
-            if (reponse.ok) {
+             event.preventDefault();
 
-                formStatus.textContent =
-                    "Message envoyé avec succès ! Je vous répondrai rapidement.";
+             const boutonEnvoyer =
+                 contactForm.querySelector(
+                     "button[type='submit']"
+                 );
 
-                formStatus.className =
-                    "form-status form-status-success";
+             if (!boutonEnvoyer) {
 
-                contactForm.reset();
+                 console.error(
+                     "Bouton d'envoi introuvable."
+                 );
 
-            }
+                 return;
+             }
 
 
-            /* =========================
-               ERREUR FORMSPREE
-               ========================= */
+             boutonEnvoyer.disabled = true;
 
-            else {
+             boutonEnvoyer.textContent =
+                 "Envoi...";
 
-                let messageErreur =
-                    "Le message n'a pas pu être envoyé. Réessayez.";
+             formStatus.textContent =
+                 "Envoi en cours...";
 
-                try {
+             formStatus.className =
+                 "form-status";
 
-                    const data = await reponse.json();
 
-                    if (data.errors && data.errors.length > 0) {
+             try {
 
-                        messageErreur =
-                            data.errors
-                                .map((erreur) => erreur.message)
-                                .join(", ");
+                 const donnees =
+                     new FormData(contactForm);
 
-                    }
+                 const response =
+                     await fetch(
+                         contactForm.action,
+                         {
+                             method: "POST",
+                             body: donnees,
+                             headers: {
+                                 Accept:
+                                     "application/json"
+                             }
+                         }
+                     );
 
-                } catch (erreurJSON) {
 
-                    console.warn(
-                        "Impossible de lire la réponse Formspree.",
-                        erreurJSON
-                    );
+                 if (response.ok) {
 
-                }
+                     formStatus.textContent =
+                         "Message envoyé avec succès ! Je vous répondrai rapidement.";
 
-                formStatus.textContent =
-                    messageErreur;
+                     formStatus.className =
+                         "form-status form-status-success";
 
-                formStatus.className =
-                    "form-status form-status-error";
+                     contactForm.reset();
 
-            }
+                 } else {
 
-        } catch (erreur) {
+                     let messageErreur =
+                         "Le message n'a pas pu être envoyé. Réessayez.";
 
-            console.error(
-                "Erreur Formspree :",
-                erreur
-            );
+                     try {
 
-            formStatus.textContent =
-                "Erreur de connexion. Réessayez ou écrivez-moi directement par e-mail.";
+                         const data =
+                             await response.json();
 
-            formStatus.className =
-                "form-status form-status-error";
+                         if (
+                             data.errors &&
+                             Array.isArray(data.errors) &&
+                             data.errors.length > 0
+                         ) {
 
-        } finally {
+                             messageErreur =
+                                 data.errors
+                                     .map(
+                                         (erreur) =>
+                                             erreur.message
+                                     )
+                                     .join(", ");
 
-            /* Réactiver le bouton */
+                         }
 
-            boutonEnvoyer.disabled = false;
-            boutonEnvoyer.textContent = "Envoyer le message";
+                     } catch (erreurJSON) {
 
-        }
+                         console.warn(
+                             "Impossible de lire la réponse Formspree.",
+                             erreurJSON
+                         );
 
-    });
+                     }
 
-}
+                     formStatus.textContent =
+                         messageErreur;
 
+                     formStatus.className =
+                         "form-status form-status-error";
 
-/* ================================
-   4. ASSISTANT IA
-   ================================ */
+                 }
 
-const aiButton = document.getElementById("ai-button");
-const aiChat = document.getElementById("ai-chat");
-const aiClose = document.getElementById("ai-close");
+             } catch (error) {
 
-const aiInput = document.getElementById("ai-input");
-const aiSend = document.getElementById("ai-send");
-const aiMessages = document.getElementById("ai-messages");
+                 console.error(
+                     "Erreur formulaire de contact :",
+                     error
+                 );
 
+                 formStatus.textContent =
+                     "Erreur de connexion. Réessayez ou écrivez-moi directement par e-mail.";
 
-/* ================================
-   4bis. URL DU SERVEUR IA
-   ================================
+                 formStatus.className =
+                     "form-status form-status-error";
 
-   En local :
-   http://127.0.0.1:3000/chat
+             } finally {
 
-   Après déploiement :
-   remplacer l'URL ci-dessous par l'URL Render.
+                 boutonEnvoyer.disabled = false;
 
-   Exemple :
-   https://whitetiger-ai.onrender.com/chat
+                 boutonEnvoyer.textContent =
+                     "Envoyer le message";
 
-   IMPORTANT :
-   La clé GROQ_API_KEY ne doit jamais apparaître ici.
-   ================================ */
+             }
 
-const AI_SERVER_URL =
-    (window.location.hostname === "localhost" ||
-     window.location.hostname === "127.0.0.1")
-        ? "http://127.0.0.1:3000/chat"
-        : "https://TON-SERVEUR-DEPLOYE.exemple.com/chat";
+         }
+     );
+ }
 
 
-/* ================================
-   5. OUVRIR L'ASSISTANT
-   ================================ */
+ /* =========================================================
+    6. ASSISTANT IA
+    ========================================================= */
 
-if (aiButton && aiChat && aiInput) {
+ const aiButton =
+     document.getElementById("ai-button");
 
-    aiButton.addEventListener("click", () => {
+ const aiChat =
+     document.getElementById("ai-chat");
 
-        aiChat.classList.remove("ai-chat-hidden");
+ const aiClose =
+     document.getElementById("ai-close");
 
-        aiInput.focus();
+ const aiInput =
+     document.getElementById("ai-input");
 
-    });
+ const aiSend =
+     document.getElementById("ai-send");
 
-}
+ const aiMessages =
+     document.getElementById("ai-messages");
 
 
-/* ================================
-   6. FERMER L'ASSISTANT
-   ================================ */
+ /* =========================================================
+    7. SERVEUR IA — TEST RENDER
+    =========================================================
 
-if (aiClose && aiChat) {
+    IMPORTANT :
 
-    aiClose.addEventListener("click", () => {
+    Pour ce test, même sur localhost,
+    toutes les requêtes vont directement vers Render.
 
-        aiChat.classList.add("ai-chat-hidden");
+    URL :
+    https://whitetiger-api.onrender.com/chat
 
-    });
+    La clé GROQ_API_KEY reste sur Render.
+    ========================================================= */
 
-}
+ const AI_SERVER_URL =
+     "https://whitetiger-api.onrender.com/chat";
 
 
-/* ================================
-   7. AJOUTER UN MESSAGE
-   ================================ */
+ /* =========================================================
+    8. OUVRIR L'ASSISTANT
+    ========================================================= */
 
-function ajouterMessage(message, classe) {
+ if (aiButton && aiChat) {
 
-    const nouveauMessage =
-        document.createElement("div");
+     aiButton.addEventListener(
+         "click",
+         () => {
 
-    nouveauMessage.classList.add(classe);
+             aiChat.classList.remove(
+                 "ai-chat-hidden"
+             );
 
-    nouveauMessage.textContent = message;
+             if (aiInput) {
 
-    aiMessages.appendChild(nouveauMessage);
+                 setTimeout(
+                     () => {
+                         aiInput.focus();
+                     },
+                     100
+                 );
 
-    aiMessages.scrollTop =
-        aiMessages.scrollHeight;
+             }
 
-}
+         }
+     );
 
+ }
 
-/* ================================
-   8. ENVOYER LE MESSAGE À L'IA
-   ================================ */
 
-if (aiSend && aiInput && aiMessages) {
+ /* =========================================================
+    9. FERMER L'ASSISTANT
+    ========================================================= */
 
-    aiSend.addEventListener("click", async () => {
+ if (aiClose && aiChat) {
 
-        console.log(
-            "LE BOUTON ENVOYER EST CLIQUÉ"
-        );
+     aiClose.addEventListener(
+         "click",
+         () => {
 
+             aiChat.classList.add(
+                 "ai-chat-hidden"
+             );
 
-        const messageUtilisateur =
-            aiInput.value.trim();
+         }
+     );
 
+ }
 
-        /* Ne rien envoyer si vide */
 
-        if (messageUtilisateur === "") {
-            return;
-        }
+ /* =========================================================
+    10. CONVERTIR LE MARKDOWN SIMPLE
+    ========================================================= */
 
+ function convertirMarkdownSimple(texte) {
 
-        /* Afficher le message utilisateur */
+     if (!texte) {
+         return "";
+     }
 
-        ajouterMessage(
-            messageUtilisateur,
-            "user-message"
-        );
 
+     let contenu =
+         String(texte);
 
-        /* Vider le champ */
 
-        aiInput.value = "";
+     /* Sécurisation HTML */
 
+     contenu = contenu
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
 
-        /* Désactiver le bouton */
 
-        aiSend.disabled = true;
+     /* Gras */
 
+     contenu = contenu.replace(
+         /\*\*(.*?)\*\*/g,
+         "<strong>$1</strong>"
+     );
 
-        /* Message temporaire */
 
-        ajouterMessage(
-            "Je réfléchis... 🤖",
-            "ai-message"
-        );
+     /* Italique */
 
+     contenu = contenu.replace(
+         /(^|[^*])\*([^*\n]+)\*(?!\*)/g,
+         "$1<em>$2</em>"
+     );
 
-        try {
 
-            const response = await fetch(
-                AI_SERVER_URL,
-                {
-                    method: "POST",
+     /* Listes */
 
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
+     contenu = contenu.replace(
+         /^\s*[-•]\s+(.+)$/gm,
+         "<li>$1</li>"
+     );
 
-                    body: JSON.stringify({
-                        message:
-                            messageUtilisateur
-                    })
-                }
-            );
 
+     /* Regrouper les listes */
 
-            /* Vérifier la réponse HTTP */
+     contenu = contenu.replace(
+         /((?:<li>.*?<\/li>\s*)+)/gs,
+         "<ul>$1</ul>"
+     );
 
-            if (!response.ok) {
 
-                throw new Error(
-                    "Erreur HTTP : " +
-                    response.status
-                );
+     /* Retours à la ligne */
 
-            }
+     contenu = contenu.replace(
+         /\n/g,
+         "<br>"
+     );
 
 
-            /* Convertir la réponse en JSON */
+     return contenu;
+ }
 
-            const data =
-                await response.json();
 
+ /* =========================================================
+    11. AJOUTER UN MESSAGE
+    ========================================================= */
 
-            /* Supprimer "Je réfléchis..." */
+ function ajouterMessage(
+     message,
+     classe
+ ) {
 
-            const messagesIA =
-                aiMessages.querySelectorAll(
-                    ".ai-message"
-                );
+     if (!aiMessages) {
+         return null;
+     }
 
 
-            if (messagesIA.length > 1) {
+     const nouveauMessage =
+         document.createElement("div");
 
-                messagesIA[
-                    messagesIA.length - 1
-                ].remove();
 
-            }
+     nouveauMessage.classList.add(
+         classe
+     );
 
 
-            /* Afficher la réponse de l'IA */
+     if (classe === "user-message") {
 
-            ajouterMessage(
-                data.reponse ||
-                "Je n'ai pas reçu de réponse.",
-                "ai-message"
-            );
+         nouveauMessage.textContent =
+             message;
 
+     } else {
 
-        } catch (error) {
+         nouveauMessage.innerHTML =
+             convertirMarkdownSimple(
+                 message
+             );
 
-            console.error(
-                "Erreur assistant IA :",
-                error
-            );
+     }
 
 
-            /* Supprimer le message temporaire */
+     aiMessages.appendChild(
+         nouveauMessage
+     );
 
-            const messagesIA =
-                aiMessages.querySelectorAll(
-                    ".ai-message"
-                );
 
+     aiMessages.scrollTop =
+         aiMessages.scrollHeight;
 
-            if (messagesIA.length > 1) {
 
-                messagesIA[
-                    messagesIA.length - 1
-                ].remove();
+     return nouveauMessage;
+ }
 
-            }
 
+ /* =========================================================
+    12. SUPPRIMER LE CHARGEMENT
+    ========================================================= */
 
-            /* Afficher l'erreur */
+ function supprimerMessageChargement(
+     messageElement
+ ) {
 
-            ajouterMessage(
-                "Désolé, je n'arrive pas à contacter le serveur 🤖.",
-                "ai-message"
-            );
+     if (
+         messageElement &&
+         messageElement.parentNode
+     ) {
 
-        }
+         messageElement.remove();
 
+     }
 
-        /* Réactiver le bouton */
+ }
 
-        aiSend.disabled = false;
 
-        aiInput.focus();
+ /* =========================================================
+    13. ENVOYER LE MESSAGE À L'IA
+    ========================================================= */
 
-    });
+ async function envoyerMessageIA() {
 
+     if (
+         !aiInput ||
+         !aiSend ||
+         !aiMessages
+     ) {
+         return;
+     }
 
-    /* ================================
-       9. TOUCHE ENTRÉE
-       ================================ */
 
-    aiInput.addEventListener(
-        "keydown",
-        (event) => {
+     const messageUtilisateur =
+         aiInput.value.trim();
 
-            if (event.key === "Enter") {
 
-                event.preventDefault();
+     if (messageUtilisateur === "") {
+         return;
+     }
 
-                aiSend.click();
 
-            }
+     /* Afficher le message utilisateur */
 
-        }
-    );
+     ajouterMessage(
+         messageUtilisateur,
+         "user-message"
+     );
 
-}
+
+     /* Vider le champ */
+
+     aiInput.value = "";
+
+
+     /* Désactiver le bouton */
+
+     aiSend.disabled = true;
+
+
+     /* Message de chargement */
+
+     const messageChargement =
+         ajouterMessage(
+             "Je réfléchis...",
+             "ai-message"
+         );
+
+
+     try {
+
+         console.log(
+             "Connexion au serveur Render..."
+         );
+
+         console.log(
+             "URL utilisée :",
+             AI_SERVER_URL
+         );
+
+
+         /* =================================================
+            REQUÊTE VERS RENDER
+            ================================================= */
+
+         const response =
+             await fetch(
+                 AI_SERVER_URL,
+                 {
+                     method: "POST",
+
+                     headers: {
+                         "Content-Type":
+                             "application/json"
+                     },
+
+                     body: JSON.stringify({
+                         message:
+                             messageUtilisateur
+                     })
+                 }
+             );
+
+
+         console.log(
+             "Réponse Render :",
+             response.status
+         );
+
+
+         /* Vérifier HTTP */
+
+         if (!response.ok) {
+
+             let detailsErreur =
+                 `Erreur serveur (${response.status})`;
+
+
+             try {
+
+                 const erreurData =
+                     await response.json();
+
+
+                 if (erreurData.message) {
+
+                     detailsErreur =
+                         erreurData.message;
+
+                 } else if (
+                     erreurData.error
+                 ) {
+
+                     detailsErreur =
+                         erreurData.error;
+
+                 }
+
+             } catch (erreurJSON) {
+
+                 console.warn(
+                     "Réponse d'erreur non JSON.",
+                     erreurJSON
+                 );
+
+             }
+
+
+             throw new Error(
+                 detailsErreur
+             );
+
+         }
+
+
+         /* =================================================
+            RÉPONSE JSON
+            ================================================= */
+
+         const data =
+             await response.json();
+
+
+         console.log(
+             "Réponse reçue depuis Render :",
+             data
+         );
+
+
+         /* Supprimer le chargement */
+
+         supprimerMessageChargement(
+             messageChargement
+         );
+
+
+         /* Récupérer la réponse */
+
+         const reponseIA =
+             data.reponse ||
+             data.response ||
+             data.message ||
+             data.answer;
+
+
+         if (!reponseIA) {
+
+             ajouterMessage(
+                 "Le serveur a répondu, mais aucune réponse IA n'a été reçue.",
+                 "ai-message"
+             );
+
+         } else {
+
+             ajouterMessage(
+                 reponseIA,
+                 "ai-message"
+             );
+
+         }
+
+     } catch (error) {
+
+         console.error(
+             "Erreur assistant IA :",
+             error
+         );
+
+
+         /* Supprimer le chargement */
+
+         supprimerMessageChargement(
+             messageChargement
+         );
+
+
+         /* Message d'erreur */
+
+         ajouterMessage(
+             "Désolé, je n'arrive pas à contacter le serveur IA. Vérifiez la console du navigateur pour plus de détails.",
+             "ai-message"
+         );
+
+     } finally {
+
+         aiSend.disabled = false;
+
+         if (aiInput) {
+             aiInput.focus();
+         }
+
+     }
+
+ }
+
+
+ /* =========================================================
+    14. BOUTON ENVOYER
+    ========================================================= */
+
+ if (aiSend) {
+
+     aiSend.addEventListener(
+         "click",
+         envoyerMessageIA
+     );
+
+ }
+
+
+ /* =========================================================
+    15. TOUCHE ENTRÉE
+    ========================================================= */
+
+ if (aiInput) {
+
+     aiInput.addEventListener(
+         "keydown",
+         (event) => {
+
+             if (
+                 event.key === "Enter" &&
+                 !event.shiftKey
+             ) {
+
+                 event.preventDefault();
+
+                 envoyerMessageIA();
+
+             }
+
+         }
+     );
+
+ }
+
+
+ /* =========================================================
+    16. TOUCHE ÉCHAP
+    ========================================================= */
+
+ document.addEventListener(
+     "keydown",
+     (event) => {
+
+         if (
+             event.key === "Escape" &&
+             aiChat &&
+             !aiChat.classList.contains(
+                 "ai-chat-hidden"
+             )
+         ) {
+
+             aiChat.classList.add(
+                 "ai-chat-hidden"
+             );
+
+         }
+
+     }
+ );
+
+
+ /* =========================================================
+    17. MESSAGE DE BIENVENUE
+    ========================================================= */
+
+ if (
+     aiMessages &&
+     aiMessages.children.length === 0
+ ) {
+
+     ajouterMessage(
+         "Bonjour 👋 Je suis l'assistant IA de Whitetiger.dev. Que souhaitez-vous savoir sur le portfolio, les projets ou le parcours de MALEDINA ?",
+         "ai-message"
+     );
+
+ }
+
+
+ /* =========================================================
+    FIN DU SCRIPT — TEST RENDER
+    ========================================================= */
