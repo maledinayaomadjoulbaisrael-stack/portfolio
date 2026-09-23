@@ -1,0 +1,13 @@
+{
+  "name": "whitetiger-server",
+  "version": "1.0.0",
+  "description": "Serveur Node.js de l'assistant IA Whitetiger.dev",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
